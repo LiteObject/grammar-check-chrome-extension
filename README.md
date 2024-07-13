@@ -12,25 +12,26 @@ Inside the root folder, create a new file named `manifest.json` and add the foll
 
 ```json
 {
-  "manifest_version": 2,
-  "name": "Hello World Extension",
-  "version": "1.0",
-  "description": "Displays a 'Hello, World!' message.",
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  },
-  "browser_action": {
-    "default_icon": {
+    "manifest_version": 2,
+    "name": "Grammar Check Extension",
+    "version": "1.0",
+    "description": "A simple grammar check tool",
+    "icons": {
       "16": "icon.png",
       "48": "icon.png",
       "128": "icon.png"
     },
-    "default_popup": "popup.html"
-  },
-  "permissions": ["activeTab"]
-}
+    "browser_action": {
+      "default_title": "Read text",
+      "default_icon": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+      },
+      "default_popup": "popup.html"
+    },
+    "permissions": ["activeTab"]    
+  }
 ```
 
 ### 3. Create a new file named `popup.html` and add the following content:
