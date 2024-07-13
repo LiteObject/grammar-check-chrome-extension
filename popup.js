@@ -10,15 +10,20 @@ document.addEventListener('DOMContentLoaded', function () {
     readButton.disabled = true;
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.executeScript(tabs[0].id, { code: getActiveElementTextScript() }, function (result) {
-        if (result && result[0]) {
-          processText(result[0]);
-        } else {
-          // console.log('No text found in the active element or selection.');
-          readButton.disabled = false;
-          textbox.textContent = 'No text found in the active element or selection.';
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabs[0].id },
+          func: getActiveElementTextScript
+        },
+        (result) => {
+          if (result && result[0] && result[0].result) {
+            processText(result[0].result);
+          } else {
+            readButton.disabled = false;
+            textbox.textContent = 'No text found in the active element or selection.';
+          }
         }
-      });
+      );
     });
   }
 
@@ -27,28 +32,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function getActiveElementTextScript() {
-    return `
-      (function() {
-        var activeElement = document.activeElement;
-        if (activeElement.matches('div, span, textarea, input, p')) {
-          if (activeElement.matches('input, textarea')) {
-            return activeElement.value;
-          } else {
-            return activeElement.textContent.trim();
-          }
-        } else {
-          var selection = window.getSelection();
-          if (selection && selection.rangeCount > 0) {
-            return selection.toString().trim();
-          }
-          return null;
-        }
-      })();
-    `;
+    var activeElement = document.activeElement;
+    if (activeElement.matches('div, span, textarea, input, p')) {
+      if (activeElement.matches('input, textarea')) {
+        return activeElement.value;
+      } else {
+        return activeElement.textContent.trim();
+      }
+    } else {
+      var selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        return selection.toString().trim();
+      }
+      return null;
+    }
   }
 
   function processText(input) {
-
     textbox.textContent = input;
     const ollamaEndpoint = 'http://localhost:11435/api/chat';
 
@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .catch(error => {
         console.error('Error:', error);
+        textbox.textContent = 'Error processing text.';
       })
       .finally(() => {
         readButton.disabled = false;
