@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grammar Check Ext</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            width: 400px;
+            height: 300px;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 300px;
+                height: 200px;
+            }
+        }
+
+        @media (min-width: 601px) {
+            body {
+                width: 500px;
+                height: 400px;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            width: calc(100% - 40px); /* Ensure the same width as #txtResult */
+            margin: 0 20px; /* Ensure the same margin as #txtResult */
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        /* Apply right margin to all buttons except the last one */
+        .button-container button:not(:last-child) {
+            margin-right: 10px; /* Adjust as needed */
+        }
+
+        button {
+            background-color: #2596be;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            border-width: 0;
+            transition: background-color 0.15s ease-in-out;
+            /* margin: 5px; */            
+            flex: 1;  /* Allow buttons to stretch and fill equal space */
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+
+        button:hover {
+            background-color: #1b708f;
+        }
+
+        /* Style for Clear button */
+        .btnClear {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .btnClear:hover {
+            background-color: #c0392b;
+        }
+
+        #txtResult {
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            padding: 8px 12px;
+            width: calc(100% - 40px); /* Adjust width to include padding and margins */
+            box-sizing: border-box; /* Include padding and border in the element’s total width */
+            flex-grow: 1;
+            margin: 10px 20px; /* Ensure margins are balanced for overall width calculation */
+            resize: none;
+            min-height: 100px;
+            overflow-y: auto;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box; /* Include padding and border in the element’s total width */
+        }
+
+        .flex-container > *:not(#txtResult) {
+            flex-shrink: 0;
+        }        
+    </style>
+    <script src="popup.js"></script>
+</head>
+<body>
+    <div class="flex-container">
+        <h3>Check Grammar</h3>
+        <div class="button-container">
+            <button id="btnRead">
+                Check
+            </button>
+            <button id="btnClear" class="btnClear">
+                Clear
+            </button>
+        </div>
+        <div id="txtResult" contenteditable="true"></div>
+    </div>
+</body>
+</html>

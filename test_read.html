@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Text Content</title>
+</head>
+
+<body>
+    <h1>Read Text Content</h1>
+    <div id="response-container">This is the div</div>
+    <span>This is a span.</span>
+    <br />
+    <textarea>Hello, this is a testarea.</textarea>
+    <br />
+    <input type="text" value="This is a text input box">
+
+    <script>
+        // Adding an event listener to capture the click event
+        document.addEventListener('click', function (event) {
+            // Getting the clicked element
+            const clickedElement = event.target;
+
+            // Checking if the clicked element is a div, span, textarea, or input
+            if (clickedElement.matches('div, span, textarea, input')) {
+                let textContent;
+                if (clickedElement.matches('input, textarea')) {
+                    // For input and textarea elements, use the value property
+                    textContent = clickedElement.value;
+                } else {
+                    // For div and span elements, use the textContent property
+                    textContent = clickedElement.textContent;
+                }
+                // Logging the text content of the clicked element
+                console.log('Clicked element text content:', textContent);
+            }
+        });
+    </script>
+</body>
+
+</html>

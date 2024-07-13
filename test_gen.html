@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fetch Example with /api/generate</title>
+</head>
+<body>
+    <h1>API Response</h1>
+    <div id="response-container"></div>
+    <script>
+        const input = "What are my name.";        
+        fetch('http://localhost:11435/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama3",
+                stream: false,
+                prompt: `Correct the following sentence grammatically: ${input}`,
+                options: {
+                    seed: 1234567,
+                    temperature: 0.5
+                }
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const responseContainer = document.getElementById('response-container');
+            const responseText = data.response;  // Extract the response text from the JSON
+            responseContainer.innerText = responseText;  // Set the response text as the content of the div
+        })
+        .catch(error => {
+            console.error(error);
+            const responseContainer = document.getElementById('response-container');
+            responseContainer.innerText = "An error occurred: " + error;
+        });
+    </script>
+</body>
+</html>
